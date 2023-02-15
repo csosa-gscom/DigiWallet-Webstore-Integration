@@ -3,47 +3,32 @@ order confirmation page has a body tag and adding another style
 tag can create conflict, it can be best to wrap the entire payment
 box in a div. See Order Confirmation Page html doc to see structure 
 check out line 280 in checkout.html -->
-<div style="background-color: red; width:100%">
-    <h1>DigiWallet</h1>
-</div>
 
-<div style="display: flex; justify-content: center; ">
-    <div style="display: block; padding: 1.5rem; background-color: #ffffff; max-width: 24rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); ">
-      <img style="width:25%;height:25%;" src="https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png">
-      <p class="text-gray-700 text-base mb-4">
-        Enter your phone number here
-      </p>
-      <button type="button" 
-      style="display: inline-block; 
-      padding-top: 0.625rem;
-      padding-bottom: 0.625rem; 
-      padding-left: 1.5rem;
-      padding-right: 1.5rem; 
-      background-color: #2563EB; 
-      color: #ffffff; 
-      font-size: 0.75rem;
-      line-height: 1rem; 
-      font-weight: 500; 
-      line-height: 1.25; 
-      text-transform: uppercase; 
-      border-radius: 0.25rem; 
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
-      ">Get Auth Code</button>
+
+<div class="card">
+    <div>
+      <a href="#!">
+        <img src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt="">
+      </a>
+      <div>
+        <h5>Card title</h5>
+        <p>
+          Some quick example text to build on the card title and make up the bulk of the card's
+          content.
+        </p>
+        <button type="button">Button</button>
+      </div>
     </div>
   </div>
 
-  <br>
-
-<style>
-    div.my-alert {
+  <style>
+    div.card {
   display: flex;
   justify-content: center;
 }
 
-div.my-alert > div {
-  display: block;
-  padding: var(--tw-size-6);
-  border-radius: var(--tw-border-radius-lg);
+div.card div {
+  border-radius: var(---border-radius-lg);
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -51,44 +36,52 @@ div.my-alert > div {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   --tw-bg-opacity: 1;
-  background-color: rgb(var(--tw-color-white) / var(--tw-bg-opacity));
-  max-width: var(--tw-width-sm);
+  background-color: rgb(var(---color-white) / var(--tw-bg-opacity));
+  max-width: var(---width-sm);
 }
 
-div.my-alert > div > h5 {
+div.card div a img {
+  border-top-left-radius: var(---border-radius-lg);
+  border-top-right-radius: var(---border-radius-lg);
+}
+
+div.card div div {
+  padding: var(---size-6);
+}
+
+div.card div div h5 {
   --tw-text-opacity: 1;
-  color: rgb(var(--tw-color-gray-900) / var(--tw-text-opacity));
-  font-size: var(--tw-font-size-xl);
-  line-height: var(--tw-line-height-7);
-  line-height: var(--tw-line-height-tight);
-  font-weight: var(--tw-font-weight-medium);
-  margin-bottom: var(--tw-size-2);
+  color: rgb(var(---color-gray-900) / var(--tw-text-opacity));
+  font-size: var(---font-size-xl);
+  line-height: var(---line-height-7);
+  font-weight: var(---font-weight-medium);
+  margin-bottom: var(---size-2);
 }
 
-div.my-alert > div > p {
+div.card div div p {
   --tw-text-opacity: 1;
-  color: rgb(var(--tw-color-gray-700) / var(--tw-text-opacity));
-  font-size: var(--tw-font-size-base);
-  line-height: var(--tw-line-height-6);
-  margin-bottom: var(--tw-size-4);
+  color: rgb(var(---color-gray-700) / var(--tw-text-opacity));
+  font-size: var(---font-size-base);
+  line-height: var(---line-height-6);
+  margin-bottom: var(---size-4);
 }
 
-div.my-alert > div > button {
+div.card div div button {
   display: inline-block;
-  padding-left: var(--tw-size-6);
-  padding-right: var(--tw-size-6);
-  padding-top: var(--tw-size-2_5);
-  padding-bottom: var(--tw-size-2_5);
+  padding-left: var(---size-6);
+  padding-right: var(---size-6);
+  padding-top: var(---size-2_5);
+  padding-bottom: var(---size-2_5);
   --tw-bg-opacity: 1;
-  background-color: rgb(var(--tw-color-blue-600) / var(--tw-bg-opacity));
+  background-color: rgb(var(---color-blue-600) / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(var(--tw-color-white) / var(--tw-text-opacity));
-  font-weight: var(--tw-font-weight-medium);
-  font-size: var(--tw-font-size-xs);
-  line-height: var(--tw-line-height-4);
-  line-height: var(--tw-line-height-tight);
+  color: rgb(var(---color-white) / var(--tw-text-opacity));
+  font-weight: var(---font-weight-medium);
+  font-size: var(---font-size-xs);
+  line-height: var(---line-height-4);
+  line-height: var(---line-height-tight);
   text-transform: uppercase;
-  border-radius: var(--tw-border-radius-default);
+  border-radius: var(---border-radius-default);
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
     0 2px 4px -2px var(--tw-shadow-color);
@@ -96,9 +89,9 @@ div.my-alert > div > button {
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-div.my-alert > div > button:hover {
+div.card div div button:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(var(--tw-color-blue-700) / var(--tw-bg-opacity));
+  background-color: rgb(var(---color-blue-700) / var(--tw-bg-opacity));
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -107,9 +100,9 @@ div.my-alert > div > button:hover {
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-div.my-alert > div > button:focus {
+div.card div div button:focus {
   --tw-bg-opacity: 1;
-  background-color: rgb(var(--tw-color-blue-700) / var(--tw-bg-opacity));
+  background-color: rgb(var(---color-blue-700) / var(--tw-bg-opacity));
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -126,9 +119,9 @@ div.my-alert > div > button:focus {
     var(--tw-shadow, 0 0 #0000);
 }
 
-div.my-alert > div > button:active {
+div.card div div button:active {
   --tw-bg-opacity: 1;
-  background-color: rgb(var(--tw-color-blue-800) / var(--tw-bg-opacity));
+  background-color: rgb(var(---color-blue-800) / var(--tw-bg-opacity));
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
@@ -137,7 +130,7 @@ div.my-alert > div > button:active {
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-div.my-alert > div > button {
+div.card div div button {
   transition-property: color, background-color, border-color, fill, stroke,
     opacity, box-shadow, transform, filter, -webkit-text-decoration-color,
     -webkit-backdrop-filter;
@@ -150,15 +143,4 @@ div.my-alert > div > button {
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-</style>
-
-<div class="my-alert">
-    <div>
-      <h5>Card title</h5>
-      <p>
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </p>
-      <button type="button">Button</button>
-    </div>
-  </div>
+  </style>
