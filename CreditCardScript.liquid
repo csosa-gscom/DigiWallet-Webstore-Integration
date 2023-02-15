@@ -2,66 +2,132 @@
 {% assign status = order.financial_status %}
 
 
-{% if fulfillment  == "unfulfilled" and  status == "pending" %}
-<div class="section__content" id="paymentForm" style="display:none">
-	<form method="post" action="https://pay1.plugnpay.com/payment/pay.cgi" target="postIframe">
-		<input type="hidden" name="askamtflg" value="1"/>
-		<input type="hidden" name="card-allowed" value="Visa,Mastercard,Amex,Discover"/>
-		<input type="hidden" name="comments" value="order number: {{ order.name }}"/>
-		<input type="hidden" name="card-amount" value="{{ order.total_price | money_without_currency }}"/>
-		<input type="hidden" name="card-address1" value="{{ billing_address.address1 }}"/>
-		<input type="hidden" name="card-address2" value="{{ billing_address.address2 }}"/>
-		<input type="hidden" name="card-city" value="{{ billing_address.city}}"/>
-		<input type="hidden" name="card-state" value="ZZ"/>
-		<input type="hidden" name="card-prov" value="{{ billing_address.province }}"/>
-		<input type="hidden" name="card-zip" value="{{ billing_address.zip }}"/>
-		<input type="hidden" name="card-country" value="{{ billing_address.country_code }}"/>
-		<input type="hidden" name="email" value="{{ customer.email }}"/>
-		<input type="hidden" name="currency" value="usd"/>
-		<input type="hidden" name="currency_symbol" value="BZD$"/>
-		<input type="hidden" name="easycart" value="0"/>
-		<input type="hidden" name="order-id" value="shopifyorder-{{ order.name }}"/>
-		<input type="hidden" name="publisher-email" value="{{ checkout.email }}"/>
-		<input type="hidden" name="publisher-name" value="gscom"/>
-		<p>
-			<div align="center">
-				<p><input id="EnterPayment" type="submit" class="btn" name="return" value="Enter Payment"/></p>
-			</div>
-		</p>
-	</form>
-		
-	<div id="postIframe" style="display: none;">
-		<iframe id="myIframe" name="postIframe" src="https://pay1.plugnpay.com/payment/pay.cgi" width="100%" height="745"></iframe>
-		<br>
-		<a id="closePayment" href="https://computersbelize.com">Close Payment</a>
-	</div>
-</div>
+{% if fulfillment == "unfulfilled" and status == "pending" %}
+  <div
+    class="section__content"
+    id="paymentForm"
+    style="display:none">
+    <form
+      method="post"
+      action="https://pay1.plugnpay.com/payment/pay.cgi"
+      target="postIframe">
+      <input
+        type="hidden"
+        name="askamtflg"
+        value="1" />
+      <input
+        type="hidden"
+        name="card-allowed"
+        value="Visa,Mastercard,Amex,Discover" />
+      <input
+        type="hidden"
+        name="comments"
+        value="order number: {{ order.name }}" />
+      <input
+        type="hidden"
+        name="card-amount"
+        value="{{ order.total_price | money_without_currency }}" />
+      <input
+        type="hidden"
+        name="card-address1"
+        value="{{ billing_address.address1 }}" />
+      <input
+        type="hidden"
+        name="card-address2"
+        value="{{ billing_address.address2 }}" />
+      <input
+        type="hidden"
+        name="card-city"
+        value="{{ billing_address.city}}" />
+      <input
+        type="hidden"
+        name="card-state"
+        value="ZZ" />
+      <input
+        type="hidden"
+        name="card-prov"
+        value="{{ billing_address.province }}" />
+      <input
+        type="hidden"
+        name="card-zip"
+        value="{{ billing_address.zip }}" />
+      <input
+        type="hidden"
+        name="card-country"
+        value="{{ billing_address.country_code }}" />
+      <input
+        type="hidden"
+        name="email"
+        value="{{ customer.email }}" />
+      <input
+        type="hidden"
+        name="currency"
+        value="usd" />
+      <input
+        type="hidden"
+        name="currency_symbol"
+        value="BZD$" />
+      <input
+        type="hidden"
+        name="easycart"
+        value="0" />
+      <input
+        type="hidden"
+        name="order-id"
+        value="shopifyorder-{{ order.name }}" />
+      <input
+        type="hidden"
+        name="publisher-email"
+        value="{{ checkout.email }}" />
+      <input
+        type="hidden"
+        name="publisher-name"
+        value="gscom" />
+      <p>
+        <div align="center">
+          <p><input
+              id="EnterPayment"
+              type="submit"
+              class="btn"
+              name="return"
+              value="Enter Payment" /></p>
+        </div>
+      </p>
+    </form>
+
+    <div id="postIframe" style="display: none;">
+      <iframe
+        id="myIframe"
+        name="postIframe"
+        src="https://pay1.plugnpay.com/payment/pay.cgi"
+        width="100%"
+        height="745"></iframe>
+      <br>
+      <a id="closePayment" href="https://computersbelize.com">Close Payment</a>
+    </div>
+  </div>
 
 {% endif %}
 <script>
-	window.addEventListener('load', function () {	
-		document.getElementById("EnterPayment").addEventListener("click", showIframe);
-		document.getElementById("closePayment").addEventListener("click", hideIframe);
+  window.addEventListener('load', function() {
+    document.getElementById("EnterPayment").addEventListener("click", showIframe);
+    document.getElementById("closePayment").addEventListener("click", hideIframe);
 
-		var method=setPaymentMet();
-		if(method=='Credit Card')
-		{
-			document.getElementById("paymentForm").style.display="initial";
-		}
-	})
-	function setPaymentMet()
-	{
-		var paymentmethod = document.getElementsByClassName("payment-method-list__item__info")[0].textContent;
-		return paymentmethod;
-	}	
-	function showIframe()
-	{		
-		document.getElementById("postIframe").style.display="initial";
-		
-	}
-	function hideIframe()
-	{		
-		document.getElementById("paymentForm").style.display="none";
-		
-	}
+    var method = setPaymentMet();
+    if (method == 'Credit Card') {
+      document.getElementById("paymentForm").style.display = "initial";
+    }
+  })
+  function setPaymentMet() {
+    var paymentmethod = document.getElementsByClassName("payment-method-list__item__info")[0].textContent;
+    return paymentmethod;
+  }
+  function showIframe() {
+    document.getElementById("postIframe").style.display = "initial";
+
+  }
+  function hideIframe() {
+    document.getElementById("paymentForm").style.display = "none";
+
+  }
 </script>
