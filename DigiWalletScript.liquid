@@ -124,10 +124,10 @@
     <div class="form-container">
 
       <div class="center">
-        <div class="form-input font">
-          <span>+501</span>
+        <div class="form-input">
+          <span class="font">+501</span>
           <span class="divider"></span>
-          <input class="tel-input" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
+          <input class="tel-input font" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
             placeholder="xxx-xxxx" maxlength="8" required>
           <span></span>
           <!-- Temporary Display to see if phone number is valid -->
@@ -159,7 +159,8 @@
     var digiPhoneNumber = digiPhoneNumber.replace('-', '');
     var digiPhoneNumber = '501' + digiPhoneNumber;
 
-    const xmlBody = '<?xml version="1.0"?><TCSRequest>'
+    const xmlBody = 
+        '<?xml version="1.0"?><TCSRequest>'
       + '<UserName>{{ username }}</UserName>'
       + '<TerminalType>API</TerminalType>'
       + '<Password>{{ password }}</Password>'
@@ -172,9 +173,29 @@
       + '</TCSRequest>';
 
     console.log(xmlBody)
-
-    // Send API call
+    doFetch(xmlBody);
   }
+
+  function doFetch(content){
+    fetch('http://190.197.36.93:6060/Telepin',
+    {
+      method: 'POST',
+      headers:{ 'Accept':'*/*',
+                'Accept-Encoding':'gzip, deflate, br',
+                'Connection':'keep-alive',
+                'Content-Type':'text/xml'},
+      body:content
+      })
+    .then(response => response.text())
+    .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+    .then(data => console.log(data))
+    .catch(error => console.log('POST REQUEST FAILED:', error));
+  }
+
+//if digi number is not valid, display error message
+
+//if digi number valid,
+
 </script>
 
 {% endif %}
