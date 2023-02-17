@@ -1,183 +1,190 @@
 {% comment %} DIGIWALLET PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "DigiWallet" %}
 
-  {% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
-  {% assign password = "0000000" %}
-  {% assign phoneNumber = order.phone %}
-  {% assign orderAmount = order.total_price %}
+{% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
+{% assign username = "5012235128" %}
+{% assign password = "000000" %}
+{% assign phoneNumber = order.phone %}
+{% assign orderAmount = order.total_price | money_without_currency%}
 
-  <style>
-    .display-frame {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
+<style>
+  .display-frame {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 
-    .card {
-      display: block;
-      width: 100%;
-      padding: 32px 16px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      border: 1px solid #d9d9d9;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
+  .card {
+    display: block;
+    width: 100%;
+    padding: 32px 16px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
 
-    .center-image {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 60%;
-    }
+  .center-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }
 
-    .center {
-      display: flex;
-      justify-content: center;
-    }
+  .center {
+    display: flex;
+    justify-content: center;
+  }
 
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin-top: 5px;
-    }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+  }
 
-    .form-input {
-      border: 1px solid #ced4da;
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-      padding: 10px 1px 10px 12px;
-      width: 100%;
-      min-width: 250px;
-      max-width: 300px;
-    }
+  .form-input {
+    border: 1px solid #ced4da;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 10px 1px 10px 12px;
+    width: 100%;
+    min-width: 250px;
+    max-width: 300px;
+  }
 
-    input:focus {
-      outline-width: 0;
-      background-color: transparent;
-    }
+  input:focus {
+    outline-width: 0;
+    background-color: transparent;
+  }
 
-    .divider {
-      border-right: 1px solid #ced4da;
-      height: 24px;
-      display: inline-block;
-      position: absolute;
-      margin-left: 2px;
+  .divider {
+    border-right: 1px solid #ced4da;
+    height: 24px;
+    display: inline-block;
+    position: absolute;
+    margin-left: 2px;
 
-    }
+  }
 
-    .tel-input {
-      display: inline-block;
-      padding-left: 9px;
-      border: none !important;
-      border-color: transparent !important;
+  .tel-input {
+    display: inline-block;
+    padding-left: 9px;
+    border: none !important;
+    border-color: transparent !important;
 
-    }
-    .font {
-      color: #374151;
-      font-size: 1rem;
-      line-height: 1.5rem;
-    }
+  }
 
-    p.font {
-      text-align: center;
-    }
+  .font {
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 
-    .verification-button {
-      color: #ffffff;
-      background-color: #00ace5;
-      padding: 10px 7px;
-      border-bottom-left-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
-      width: 100%;
-      min-width: 265px;
-      max-width: 315px;
-    }
+  p.font {
+    text-align: center;
+  }
 
-    .verification-button:hover {
-      background-color: #0088b5;
-      transition: 0.4s;
-    }
-    .verification-button:active {
-      background-color: #005c7a;
-    }
+  .verification-button {
+    color: #ffffff;
+    background-color: #00ace5;
+    padding: 10px 7px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    width: 100%;
+    min-width: 265px;
+    max-width: 315px;
+  }
 
-    input:valid + span::after {
-      position: absolute;
-      content: "✓";
-      padding-left: 30px;
-      color: #009000;
-    }
-  </style>
+  .verification-button:hover {
+    background-color: #0088b5;
+    transition: 0.4s;
+  }
 
-  <div class="display-frame">
-    <div class="card">
-      <img
-        class="center-image"
-        src={{digiWalletLogo}}
-        alt="DigiWallet Logo">
+  .verification-button:active {
+    background-color: #005c7a;
+  }
 
-      <br>
-      <p class="font">Enter your DigiWallet phone number here</p>
+  input:valid+span::after {
+    position: absolute;
+    content: "✓";
+    padding-left: 30px;
+    color: #009000;
+  }
+</style>
 
-      <!-- INPUT TELEPHONE NUMBER SECTION-->
-      <div class="form-container">
+<div class="display-frame">
+  <div class="card">
+    <img class="center-image" src={{digiWalletLogo}} alt="DigiWallet Logo">
 
-        <div class="center">
-          <div class="form-input font">
-            <span>+501</span>
-            <span class="divider"></span>
-            <input
-              class="tel-input"
-              type="tel"
-              id="digiPhoneNumberField"
-              pattern="[0-9]{3}-[0-9]{4}"
-              placeholder="xxx-xxxx"
-              maxlength="8"
-              required>
-            <span></span>
-            <!-- Temporary Display to see if phone number is valid -->
-          </div>
+    <br>
+    <p class="font">Enter your DigiWallet phone number here</p>
+
+    <!-- INPUT TELEPHONE NUMBER SECTION-->
+    <div class="form-container">
+
+      <div class="center">
+        <div class="form-input font">
+          <span>+501</span>
+          <span class="divider"></span>
+          <input class="tel-input" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
+            placeholder="xxx-xxxx" maxlength="8" required>
+          <span></span>
+          <!-- Temporary Display to see if phone number is valid -->
         </div>
+      </div>
 
-        <div class="center">
-          <button
-            onclick="salesRequestMerchant()"
-            class="verification-button"
-            id="getVeriCode"
-            type="submit">Get Verification Code</button>
-        </div>
-
+      <div class="center">
+        <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
+          Verification Code</button>
       </div>
 
     </div>
+
   </div>
+</div>
 
 
-  <script>
-    var tele = document.getElementById('digiPhoneNumberField');
+<script>
+  var tele = document.getElementById('digiPhoneNumberField');
 
-    tele.addEventListener('keyup', function(e) {
-      if (event.key != 'Backspace' && (tele.value.length === 3)) {
-        tele.value += '-';
-      }
-    });
-
-    function salesRequestMerchant() {
-      var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
-
-// Send API call
+  tele.addEventListener('keyup', function (e) {
+    if (event.key != 'Backspace' && (tele.value.length === 3)) {
+      tele.value += '-';
     }
-  </script>
+  });
+
+  function salesRequestMerchant() {
+    var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
+    var digiPhoneNumber = digiPhoneNumber.replace('-', '');
+    var digiPhoneNumber = '501' + digiPhoneNumber;
+
+    const xmlBody = '<?xml version="1.0"?><TCSRequest>'
+      + '<UserName>{{ username }}</UserName>'
+      + '<TerminalType>API</TerminalType>'
+      + '<Password>{{ password }}</Password>'
+      + '<Function name="SALESREQUESTMERCHANT">'
+      + '<Param1>947</Param1>'
+      + '<Param2>{{ orderAmount }}</Param2>'
+      + '<Param4>' + digiPhoneNumber + '</Param4>'
+      + '<Param6>5012235128</Param6>'
+      + '</Function>'
+      + '</TCSRequest>';
+
+    console.log(xmlBody)
+
+    // Send API call
+  }
+</script>
 
 {% endif %}
 
 {% comment %} E-KYASH PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "E-Kyash" %}
-  <h1>Ekyash</h1>
+<h1>Ekyash</h1>
 {% endif %}
 
 {% comment %} CREDIT CARD PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "Credit Card" %}
-  <h2>Credit Card</h2>
+<h2>Credit Card</h2>
 {% endif %}
