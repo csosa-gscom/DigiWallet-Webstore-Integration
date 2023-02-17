@@ -1,211 +1,266 @@
 {% comment %} DIGIWALLET PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "DigiWallet" %}
 
-{% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
-{% assign username = "5012235128" %}
-{% assign password = "000000" %}
-{% assign phoneNumber = order.phone %}
-{% assign orderAmount = order.total_price | money_without_currency%}
+  {% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
+  {% assign username = "5012235128" %}
+  {% assign password = "000000" %}
+  {% assign phoneNumber = order.phone %}
+  {% assign orderAmount = order.total_price | money_without_currency %}
 
-<style>
-  .display-frame {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
+  <style>
+    .display-frame {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-  .card {
-    display: block;
-    width: 100%;
-    padding: 32px 16px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #d9d9d9;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
+    .card {
+      display: block;
+      width: 100%;
+      padding: 32px 16px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #d9d9d9;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
-  .center-image {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 35%;
-  }
+    .center-image {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 35%;
+    }
 
-  .center {
-    display: flex;
-    justify-content: center;
-  }
+    .center {
+      display: flex;
+      justify-content: center;
+    }
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 5px;
-  }
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 5px;
+    }
 
-  .form-input {
-    border: 1px solid #ced4da;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    padding: 10px 1px 10px 12px;
-    width: 100%;
-    min-width: 250px;
-    max-width: 300px;
-  }
+    .form-input {
+      border: 1px solid #ced4da;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      padding: 10px 1px 10px 12px;
+      width: 100%;
+      min-width: 250px;
+      max-width: 300px;
+    }
 
-  input:focus {
-    outline-width: 0;
-    background-color: transparent;
-  }
+    input:focus {
+      outline-width: 0;
+      background-color: transparent;
+    }
 
-  .divider {
-    border-right: 1px solid #ced4da;
-    height: 24px;
-    display: inline-block;
-    position: absolute;
-    margin-left: 2px;
+    .divider {
+      border-right: 1px solid #ced4da;
+      height: 24px;
+      display: inline-block;
+      position: absolute;
+      margin-left: 2px;
 
-  }
+    }
 
-  .tel-input {
-    display: inline-block;
-    padding-left: 9px;
-    border: none !important;
-    border-color: transparent !important;
+    .tel-input {
+      display: inline-block;
+      padding-left: 9px;
+      border: none !important;
+      border-color: transparent !important;
 
-  }
+    }
 
-  .font {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
+    .font {
+      color: #374151;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
 
-  p.font {
-    text-align: center;
-  }
+    p.font {
+      text-align: center;
+    }
 
-  .verification-button {
-    color: #ffffff;
-    background-color: #00ace5;
-    padding: 10px 7px;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    width: 100%;
-    min-width: 265px;
-    max-width: 315px;
-  }
+    .errorMessage {
+      display: none;
+      margin-top: 6px;
+      color: red;
+      text-align: center;
+    }
 
-  .verification-button:hover {
-    background-color: #0088b5;
-    transition: 0.4s;
-  }
+    .verification-button {
+      color: #ffffff;
+      background-color: #00ace5;
+      padding: 10px 7px;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      width: 100%;
+      min-width: 265px;
+      max-width: 315px;
+    }
 
-  .verification-button:active {
-    background-color: #005c7a;
-  }
+    .verification-button:hover {
+      background-color: #0088b5;
+      transition: 0.4s;
+    }
 
-  input:valid+span::after {
-    position: absolute;
-    content: "✓";
-    padding-left: 30px;
-    color: #009000;
-  }
-</style>
+    .verification-button:active {
+      background-color: #005c7a;
+    }
 
-<div class="display-frame">
-  <div class="card">
-    <img class="center-image" src={{digiWalletLogo}} alt="DigiWallet Logo">
+    input:valid + span::after {
+      position: absolute;
+      content: "✓";
+      padding-left: 30px;
+      color: #009000;
+    }
+  </style>
 
-    <br>
-    <p class="font">Enter your DigiWallet phone number here</p>
+  <div class="display-frame">
+    <div class="card">
+      <img
+        class="center-image"
+        src={{digiWalletLogo}}
+        alt="DigiWallet Logo">
 
-    <!-- INPUT TELEPHONE NUMBER SECTION-->
-    <div class="form-container">
+      <div id="telContainer">
+        <br>
+        <p class="font">Enter your DigiWallet phone number here</p>
 
-      <div class="center">
-        <div class="form-input">
-          <span class="font">+501</span>
-          <span class="divider"></span>
-          <input class="tel-input font" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
-            placeholder="xxx-xxxx" maxlength="8" required>
-          <span></span>
-          <!-- Temporary Display to see if phone number is valid -->
+        <!-- INPUT TELEPHONE NUMBER SECTION-->
+        <div class="form-container">
+
+          <div class="center">
+            <div class="form-input">
+              <span class="font">+501</span>
+              <span class="divider"></span>
+              <input
+                class="tel-input font"
+                type="tel"
+                id="digiPhoneNumberField"
+                pattern="[0-9]{3}-[0-9]{4}"
+                placeholder="xxx-xxxx"
+                maxlength="8"
+                required>
+              <span></span>
+              <!-- Temporary Display to see if phone number is valid -->
+            </div>
+          </div>
+
+          <div class="center">
+            <button
+              onclick="salesRequestMerchant()"
+              class="verification-button"
+              id="getVeriCode"
+              type="submit">Get
+              Verification Code</button>
+          </div>
+
+          <div class="errorMessage" id="errorMessageContainer">
+            <small>You've entered an invalid DigiWallet subscriber number.
+              Please enter valid mobile number</small>
+          </div>
+
         </div>
       </div>
 
-      <div class="center">
-        <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
-          Verification Code</button>
+
+      <div id="veriContainer" style="background-color: blue; display:none">
+        <p>Hello</p>
       </div>
 
+
     </div>
-
   </div>
-</div>
 
 
-<script>
-  var tele = document.getElementById('digiPhoneNumberField');
+  <script>
 
-  tele.addEventListener('keyup', function (e) {
-    if (event.key != 'Backspace' && (tele.value.length === 3)) {
-      tele.value += '-';
+    // Adds dash to fourth character in the input field
+    var tele = document.getElementById('digiPhoneNumberField');
+    tele.addEventListener('keyup', function(e) {
+      if (event.key != 'Backspace' && (tele.value.length === 3)) {
+        tele.value += '-';
+      }
+    });
+
+// gets the user inputed telephone number, formats it and generates XML content to be
+// sent to an API call. We then look at the <result> tag to do the appropiate action
+    function salesRequestMerchant() {
+      var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
+      var digiPhoneNumber = digiPhoneNumber.replace('-', '');
+      var digiPhoneNumber = '501' + digiPhoneNumber;
+
+      const xmlBody = '<?xml version="1.0"?><TCSRequest>' + '<UserName> {{ username }} </UserName>' + '<TerminalType>API</TerminalType>' + '<Password> {{ password }} </Password>' + '<Function name="SALESREQUESTMERCHANT">' + '<Param1>947</Param1>' + '<Param2> {{ orderAmount }} </Param2>' + '<Param4>' + digiPhoneNumber + '</Param4>' + '<Param6>5012235128</Param6>' + '</Function>' + '</TCSRequest>';
+
+// xml response returned here from API call
+      var response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
+      var badResponse = '<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(badResponse, "text/xml");
+
+// var xmlResponse = doFetch(xmlBody);
+
+      var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+
+      if (result == 0) {
+        displayTAC();
+      } else if (result == 100508) {
+        invalidSubscriberNumber();
+      }
+
     }
-  });
 
-  function salesRequestMerchant() {
-    var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
-    var digiPhoneNumber = digiPhoneNumber.replace('-', '');
-    var digiPhoneNumber = '501' + digiPhoneNumber;
+// POST API Request, the response is parsed into an XML object and returned
+// 
+// @Param content - XML content to be sent
+    function doFetch(content) {
+      fetch('http://190.197.36.93:6060/Telepin', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Connection': 'keep-alive',
+          'Content-Type': 'text/xml'
+        },
+        body: content
+      }).then(response => {
+        parser = new DOMParser();
+        xmlDoc = parser.parseFromString(response, "text/xml");
+        return xmlDoc;
+      }).catch(error => console.log('POST REQUEST FAILED:', error));
+    }
 
-    const xmlBody = 
-        '<?xml version="1.0"?><TCSRequest>'
-      + '<UserName>{{ username }}</UserName>'
-      + '<TerminalType>API</TerminalType>'
-      + '<Password>{{ password }}</Password>'
-      + '<Function name="SALESREQUESTMERCHANT">'
-      + '<Param1>947</Param1>'
-      + '<Param2>{{ orderAmount }}</Param2>'
-      + '<Param4>' + digiPhoneNumber + '</Param4>'
-      + '<Param6>5012235128</Param6>'
-      + '</Function>'
-      + '</TCSRequest>';
+// Hides Telephone Input Page and displays Code Verification Page where use 
+// will be prompted to enter TAC and complete payment process
+    function displayTAC() {
+      var x = document.getElementById("telContainer");
+      var y = document.getElementById("veriContainer");
+      x.style.display = "none";
+      y.style.display = "block";
+    }
 
-    console.log(xmlBody)
-    doFetch(xmlBody);
-  }
+// Displays error message
+    function invalidSubscriberNumber() {
+      var z = document.getElementById("errorMessageContainer");
+      z.style.display = "block";
 
-  function doFetch(content){
-    fetch('http://190.197.36.93:6060/Telepin',
-    {
-      method: 'POST',
-      headers:{ 'Accept':'*/*',
-                'Accept-Encoding':'gzip, deflate, br',
-                'Connection':'keep-alive',
-                'Content-Type':'text/xml'},
-      body:content
-      })
-    .then(response => response.text())
-    .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-    .then(data => console.log(data))
-    .catch(error => console.log('POST REQUEST FAILED:', error));
-  }
-
-//if digi number is not valid, display error message
-
-//if digi number valid,
-
-</script>
+// clear telephone form code here
+    }
+  </script>
 
 {% endif %}
 
 {% comment %} E-KYASH PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "E-Kyash" %}
-<h1>Ekyash</h1>
+  <h1>Ekyash</h1>
 {% endif %}
 
 {% comment %} CREDIT CARD PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "Credit Card" %}
-<h2>Credit Card</h2>
+  <h2>Credit Card</h2>
 {% endif %}

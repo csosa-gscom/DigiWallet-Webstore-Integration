@@ -76,6 +76,14 @@
     text-align: center;
   }
 
+  .errorMessage{
+    display:none;
+    margin-top:6px;
+    color: red;
+    text-align: center;
+
+  }
+
   .verification-button {
     color: #ffffff;
     background-color: #00ace5;
@@ -108,33 +116,44 @@
   <div class="card">
     <img class="center-image" src=https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png alt="DigiWallet Logo">
 
-    <br>
-    <p class="font">Enter your DigiWallet phone number here</p>
+    <div id="telContainer">
+          <br>
+          <p class="font">Enter your DigiWallet phone number here</p>
 
-    <!-- INPUT TELEPHONE NUMBER SECTION-->
-    <div class="form-container">
+          <!-- INPUT TELEPHONE NUMBER SECTION-->
+          <div class="form-container">
 
-      <div class="center">
-        <div class="form-input">
-          <span class="font">+501</span>
-          <span class="divider"></span>
-          <input class="tel-input font" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
-            placeholder="xxx-xxxx" maxlength="8" required>
-          <span></span>
-          <!-- Temporary Display to see if phone number is valid -->
-        </div>
-      </div>
+            <div class="center">
+              <div class="form-input">
+                <span class="font">+501</span>
+                <span class="divider"></span>
+                <input class="tel-input font" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
+                  placeholder="xxx-xxxx" maxlength="8" required>
+                <span></span>
+                <!-- Temporary Display to see if phone number is valid -->
+              </div>
+            </div>
 
-      <div class="center">
-        <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
-          Verification Code</button>
-      </div>
+            <div class="center">
+              <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
+                Verification Code</button>
+            </div>
 
+            <div class="errorMessage" id="errorMessageContainer">
+              <small >You've entered an invalid DigiWallet subscriber number.
+                Please enter valid mobile number</small>
+            </div>
+
+          </div>
+    </div>
+
+
+    <div id="veriContainer" style="background-color: blue; display:none">
+      <p>Hello </p>
     </div>
 
   </div>
 </div>
-
 
 <script>
   var tele = document.getElementById('digiPhoneNumberField');
@@ -145,11 +164,37 @@
     }
   });
 
-  console.log('what')
+  function salesRequestMerchant() {
+    response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
+    badResponse='<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
+    
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(badResponse,"text/xml");
 
-//if digi number is not valid, display error message
+    var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
 
-//if digi number valid,
+    if(result == 0){
+      displayTAC();
+    } else if(result == 100508){
+      invalidSubscriberNumber();
+    }
+  }
+
+
+  function displayTAC() {
+    var x = document.getElementById("telContainer");
+    var y = document.getElementById("veriContainer");
+    x.style.display = "none";
+    y.style.display = "block";
+
+  }
+
+  function invalidSubscriberNumber(){
+    var z = document.getElementById("errorMessageContainer");
+    z.style.display = "block";
+    //clear telephone form
+  }
 
 </script>
 
+<h1>testing</h1>
