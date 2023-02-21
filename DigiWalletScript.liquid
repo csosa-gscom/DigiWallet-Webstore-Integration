@@ -1,190 +1,433 @@
 {% comment %} DIGIWALLET PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "DigiWallet" %}
 
-{% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
-{% assign username = "5012235128" %}
-{% assign password = "000000" %}
-{% assign phoneNumber = order.phone %}
-{% assign orderAmount = order.total_price | money_without_currency%}
+  {% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
+  {% assign username = "5012235128" %}
+  {% assign password = "000000" %}
+  {% assign phoneNumber = order.phone %}
+  {% assign orderAmount = order.total_price | money_without_currency %}
 
-<style>
-  .display-frame {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
 
-  .card {
-    display: block;
-    width: 100%;
-    padding: 32px 16px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #d9d9d9;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700 &display=swap");
 
-  .center-image {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 35%;
-  }
+    .custom-font {
+      font-family: "Poppins", sans-serif;
+      color: #374151;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
 
-  .center {
-    display: flex;
-    justify-content: center;
-  }
+    *.unselectable {
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 5px;
-  }
+    .app-frame {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-  .form-input {
-    border: 1px solid #ced4da;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    padding: 10px 1px 10px 12px;
-    width: 100%;
-    min-width: 250px;
-    max-width: 300px;
-  }
+    .card {
+      display: block;
+      width: 100%;
+      padding: 32px 16px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #d9d9d9;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
-  input:focus {
-    outline-width: 0;
-    background-color: transparent;
-  }
+    .digiLogo {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 40%;
+    }
 
-  .divider {
-    border-right: 1px solid #ced4da;
-    height: 24px;
-    display: inline-block;
-    position: absolute;
-    margin-left: 2px;
+    .content-container {
+      flex-direction: column;
+    }
 
-  }
+    .center {
+      display: flex;
+      justify-content: center;
+    }
 
-  .tel-input {
-    display: inline-block;
-    padding-left: 9px;
-    border: none !important;
-    border-color: transparent !important;
+    .spacing {
+      margin-top: 1rem;
+    }
 
-  }
+    input:focus {
+      outline-width: 0;
+      background-color: transparent;
+    }
 
-  .font {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
+    .tel-group {
+      border: 1px solid #ced4da;
+      border-radius: 0.5rem;
+      padding: 10px 0 10px 10px;
+      width: 100%;
+      min-width: 250px;
+      max-width: 300px;
+    }
 
-  p.font {
-    text-align: center;
-  }
+    .divider {
+      border-right: 1px solid #ced4da;
+      height: 26px;
+      display: inline-block;
+      position: absolute;
+      margin-left: 3px;
 
-  .verification-button {
-    color: #ffffff;
-    background-color: #00ace5;
-    padding: 10px 7px;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    width: 100%;
-    min-width: 265px;
-    max-width: 315px;
-  }
+    }
 
-  .verification-button:hover {
-    background-color: #0088b5;
-    transition: 0.4s;
-  }
+    .tel-input {
+      width: 120px;
+      display: inline-block;
+      padding-left: 10px;
+      border: none !important;
+      border-color: transparent !important;
+      outline: none;
+    }
 
-  .verification-button:active {
-    background-color: #005c7a;
-  }
+    .verification-button {
+      color: #374151;
+      background: #e7e7e7;
+      padding: 10px;
+      border: none;
+      border-radius: 0.5rem;
+      width: 100%;
+      min-width: 265px;
+      max-width: 312px;
+      cursor: pointer;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
 
-  input:valid+span::after {
-    position: absolute;
-    content: "✓";
-    padding-left: 30px;
-    color: #009000;
-  }
-</style>
+    .verification-button.active {
+      background: #4070f4;
+      color: #fff;
+      pointer-events: auto;
+    }
 
-<div class="display-frame">
-  <div class="card">
-    <img class="center-image" src={{digiWalletLogo}} alt="DigiWallet Logo">
+    .verification-button:hover {
+      background: #0e4bf1;
+    }
 
-    <br>
-    <p class="font">Enter your DigiWallet phone number here</p>
+    .errorMessage {
+      display: none;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: red;
+      text-align: center;
+    }
 
-    <!-- INPUT TELEPHONE NUMBER SECTION-->
-    <div class="form-container">
 
-      <div class="center">
-        <div class="form-input font">
-          <span>+501</span>
-          <span class="divider"></span>
-          <input class="tel-input" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
-            placeholder="xxx-xxxx" maxlength="8" required>
-          <span></span>
-          <!-- Temporary Display to see if phone number is valid -->
+    :where(form, .input-field) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    form .input-field {
+      flex-direction: row;
+      column-gap: 4px;
+    }
+
+    .input-field input {
+      height: 33px;
+      width: 27px;
+      border-radius: 5px;
+      outline: none;
+      font-size: 1.125rem;
+      text-align: center;
+      border: 1px solid #ddd;
+
+    }
+
+    .input-field input:focus {
+      border: 2px solid #0089f8;
+    }
+
+    .input-field input::-webkit-inner-spin-button,
+    .input-field input::-webkit-outer-spin-button {
+      display: none;
+    }
+  </style>
+
+
+
+  <div class="app-frame">
+    <div class="card">
+      <img class="digiLogo unselectable"
+        src="https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png"
+        alt="DigiWallet Logo">
+
+
+      <!-- INPUT TELEPHONE NUMBER SECTION-->
+      <div id="telInputPage">
+        <p class="spacing custom-font center unselectable">Enter your DigiWallet phone number here</p>
+
+        <div class="content-container">
+          <div class="center">
+            <div class="spacing tel-group unselectable" id="tel-group">
+              <span class="custom-font unselectable">+501</span>
+              <span class="divider unselectable"></span>
+              <input
+                class="tel-input custom-font"
+                type="tel"
+                id="phoneNumberInput"
+                placeholder="XXX-XXXX"
+                maxlength="8"
+                required
+                onfocus='highlight(this)'
+                onblur='unhighlight(this)'>
+            </div>
+          </div>
+          <div class="center">
+            <button
+              onclick="salesRequestMerchant()"
+              class="spacing verification-button custom-font unselectable"
+              id="veri-button"
+              type="button">
+              Get Verification Code
+            </button>
+          </div>
+          <div class="errorMessage" id="errorMessageContainer">
+            <p>Phone number you entered is not valid. Please check the number and enter a valid DigiWallet  number. Please enter valid mobile number</p>
+          </div>
         </div>
       </div>
 
-      <div class="center">
-        <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
-          Verification Code</button>
+
+      <!-- INPUT TAC SECTION-->
+      <div id="veriContainer" style="display:none">
+        <p class="spacing custom-font center unselectable">Enter 10 digit authorization code sent to your phone</p>
+        <form action="#">
+          <div class="spacing input-field">
+            <input id="tacInput" type="tel" />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+            <input
+              id="tacInput"
+              type="tel"
+              disabled />
+          </div>
+          <button class="spacing verification-button custom-font unselectable" id="veriTAC">Pay ${{ orderAmount }}</button>
+        </form>
       </div>
 
+
     </div>
-
   </div>
-</div>
 
+  <script>
+    var tele = document.getElementById('phoneNumberInput');
+    var veriButton = document.getElementById("veri-button");
+    var telGroup = document.getElementById('tel-group');
+    var errorMsg = document.getElementById("errorMessageContainer");
 
-<script>
-  var tele = document.getElementById('digiPhoneNumberField');
+// Auto selects telephone input field when page loads
+// tele.focus();
+// tele.select();
 
-  tele.addEventListener('keyup', function (e) {
-    if (event.key != 'Backspace' && (tele.value.length === 3)) {
-      tele.value += '-';
+// Highlight and unhighlight the telephone group for user accessibility
+    function highlight() {
+      telGroup.style.border = "2px solid #0089f8";
+      errorMsg.style.display = "none";
     }
-  });
 
-  function salesRequestMerchant() {
-    var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
-    var digiPhoneNumber = digiPhoneNumber.replace('-', '');
-    var digiPhoneNumber = '501' + digiPhoneNumber;
+    function unhighlight() {
+      telGroup.style.border = "1px solid #ced4da";
+    }
 
-    const xmlBody = '<?xml version="1.0"?><TCSRequest>'
-      + '<UserName>{{ username }}</UserName>'
-      + '<TerminalType>API</TerminalType>'
-      + '<Password>{{ password }}</Password>'
-      + '<Function name="SALESREQUESTMERCHANT">'
-      + '<Param1>947</Param1>'
-      + '<Param2>{{ orderAmount }}</Param2>'
-      + '<Param4>' + digiPhoneNumber + '</Param4>'
-      + '<Param6>5012235128</Param6>'
-      + '</Function>'
-      + '</TCSRequest>';
+// Event listener to add a dash to fourth character in the input field, when input field is filled and 
+// meets the condition then the button is enabled
+    tele.addEventListener('keyup', () => {
 
-    console.log(xmlBody)
+      if (event.key != 'Backspace' && (tele.value.length === 3)) {
+        tele.value += '-';
+      }
 
-    // Send API call
-  }
-</script>
+// Checks input length equals to 8, doesnt have alphabets, and it has a dash in its fourth place to procceed
+      if (tele.value.length === 8 && ! tele.value.match(/[a-zA-Z]/) && tele.value.charAt(3) === "-") {
+        veriButton.classList.add("active");
+        return;
+      } else {
+        veriButton.classList.remove("active");
+      }
+    });
+
+// gets the user inputed telephone number, formats it and generates XML content to be
+// sent to an API call. We then look at the <result> tag to do the appropiate action
+    function salesRequestMerchant() {
+      var digiPhoneNumber = document.getElementById('phoneNumberInput').value;
+      var digiPhoneNumber = digiPhoneNumber.replace('-', '');
+      var digiPhoneNumber = '501' + digiPhoneNumber;
+
+// const xmlBody = '<?xml version="1.0"?><TCSRequest>' + '<UserName> {{ username }} </UserName>' + '<TerminalType>API</TerminalType>' + '<Password> {{ password }} </Password>' + '<Function name="SALESREQUESTMERCHANT">' + '<Param1>947</Param1>' + '<Param2> {{ orderAmount }} </Param2>' + '<Param4>' + digiPhoneNumber + '</Param4>' + '<Param6>5012235128</Param6>' + '</Function>' + '</TCSRequest>';
+
+// xml response returned here from API call
+      var response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
+      var badResponse = '<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(badResponse, "text/xml")
+
+// var xmlResponse = doFetch(xmlBody);
+
+      var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+
+// Result code ditcates error or continue to next step
+      if (result == 0) {
+        displayTAC();
+      } else if (result == 100508) {
+        invalidSubscriberNumber();
+      }
+
+    }
+
+// POST API Request, the response is parsed into an XML object and returned
+// 
+// @Param content - XML content to be sent
+    function doFetch(content) {
+      fetch('http://190.197.36.93:6060/Telepin', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Connection': 'keep-alive',
+          'Content-Type': 'text/xml'
+        },
+        body: content
+      }).then(response => {
+        parser = new DOMParser();
+        xmlDoc = parser.parseFromString(response, "text/xml");
+        return xmlDoc;
+      }).catch(error => console.log('POST REQUEST FAILED:', error));
+    }
+
+// Hides Telephone Input Page and displays Code Verification Page where user 
+// will be prompted to enter TAC and complete payment process
+    function displayTAC() {
+      var x = document.getElementById("telInputPage");
+      var y = document.getElementById("veriContainer");
+      x.style.display = "none";
+      y.style.display = "block";
+    }
+
+// Displays error message
+    function invalidSubscriberNumber() {
+      errorMsg.style.display = "block";
+      telGroup.style.border = "2px solid red";
+      veriButton.classList.remove("active");
+    }
+
+
+
+// ----------------------------------TAC INPUTSCRIPT -----------------------------------------
+
+    const inputs = document.querySelectorAll("#tacInput"),
+      button = document.querySelector("#veriTAC");
+
+// iterate over all inputs
+    inputs.forEach((input, index1) => {
+      input.addEventListener("keyup", (e) => {
+
+// This code gets the current input element and stores it in the currentInput variable
+// This code gets the next sibling element of the current input element and stores it in the nextInput variable
+// This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+        const currentInput = input,
+          nextInput = input.nextElementSibling,
+          prevInput = input.previousElementSibling;
+
+// if the value has more than one character then clear it
+        if (currentInput.value.length > 1) {
+          currentInput.value = "";
+          return;
+        }
+
+// if the next input is disabled and the current value is not empty
+// enable the next input and focus on it
+        if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+          nextInput.removeAttribute("disabled");
+          nextInput.focus();
+        }
+
+// if the backspace key is pressed
+        if (e.key === "Backspace") { // iterate over all inputs again
+          inputs.forEach((input, index2) => {
+
+// if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+// and the previous element exists, set the disabled attribute on the input and focus on the previous element
+            if (index1 <= index2 && prevInput) {
+              input.setAttribute("disabled", true);
+              input.value = "";
+              prevInput.focus();
+            }
+          });
+        }
+
+// if the tenth input( which index number is 9) is not empty and has not disable attribute then
+// add active class if not then remove the active class.
+        if (! inputs[9].disabled && inputs[9].value !== "") {
+          button.classList.add("active");
+          return;
+        }
+        button.classList.remove("active");
+      });
+    });
+
+// focus the first input which index is 0 on window load
+// window.addEventListener("load", () => inputs[0].focus());
+    inputs[0].focus()
+    inputs[0].select();
+  </script>
+
+
 
 {% endif %}
 
 {% comment %} E-KYASH PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "E-Kyash" %}
-<h1>Ekyash</h1>
+  <h1>Ekyash</h1>
 {% endif %}
 
 {% comment %} CREDIT CARD PAYMENT METHOD {% endcomment %}
 {% if order.transactions[0].gateway == "Credit Card" %}
-<h2>Credit Card</h2>
+  <h2>Credit Card</h2>
 {% endif %}
