@@ -136,6 +136,67 @@
   input[type=number] {
     -moz-appearance: textfield;
   }
+
+  .wrapper {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #7ac142;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards
+  }
+
+  .checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+
+    box-shadow: inset 0px 0px 0px #7ac142;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both
+  }
+
+  .checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0
+    }
+  }
+
+  @keyframes scale {
+
+    0%,
+    100% {
+      transform: none
+    }
+
+    50% {
+      transform: scale3d(1.1, 1.1, 1)
+    }
+  }
+
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 50px #7ac142
+    }
+  }
 </style>
 
 <div class="display-frame">
@@ -165,9 +226,9 @@
             Verification Code</button>
         </div>
 
-        <div class="errorMessage" id="errorMessageContainer">
+        <div class="errorMessage" id="errorMessageWrongNumber">
           <small>You've entered an invalid DigiWallet subscriber number.
-            Please enter valid mobile number</small>
+            Please enter a valid mobile number</small>
         </div>
 
       </div>
@@ -189,13 +250,37 @@
         </div>
 
         <div class="center">
-          <button onclick="" class="verification-button" id="submitVeriCode" type="submit">Process Payment</button>
+          <button onclick="salesRequestExecToSelf()" class="verification-button" id="submitVeriCode"
+            type="submit">Process Payment</button>
         </div>
 
-        <div class="errorMessage" id="errorMessageContainer">
-          <small></small>
+        <div class="errorMessage" id="errorMessageWrongTAC">
+          <small>You've entered an incorrect confirmation number.
+            Please check the number and try again.</small>
         </div>
 
+        <div class="errorMessage" id="errorMessageDupTAC">
+          <small>The confirmation number has already been used.
+            Please check the number and try again.</small>
+        </div>
+
+        <div class="errorMessage" id="errorMessageFunds">
+          <small>Transaction Declined. Please check that you have sufficient funds and try again.</small>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="successContainer" style="display:none">
+
+      <!-- Payment Confirmed-->
+      <div class="form-container">
+        <div class="wrapper"> <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+          </svg>
+        </div>
+        <p class="font">Payment Successfully Processed</p>
       </div>
     </div>
 
@@ -215,21 +300,21 @@
   });
 
   // gets the user inputed telephone number, formats it and generates XML content to be
-  // sent to an API call. We then look at the <result> tag to do the appropiate action
+  // sent to an API call. We then look at the <result> tag to do the appropriate action
   function salesRequestMerchant() {
     var digiPhoneNumber = document.getElementById('digiPhoneNumberField').value;
     var digiPhoneNumber = digiPhoneNumber.replace('-', '');
     var digiPhoneNumber = '501' + digiPhoneNumber;
 
-    const xmlBody = '<?xml version="1.0"?><TCSRequest>' + '<UserName> {{ username }} </UserName>' + '<TerminalType>API</TerminalType>' + '<Password> {{ password }} </Password>' + '<Function name="SALESREQUESTMERCHANT">' + '<Param1>947</Param1>' + '<Param2> {{ orderAmount }} </Param2>' + '<Param4>' + digiPhoneNumber + '</Param4>' + '<Param6>5012235128</Param6>' + '</Function>' + '</TCSRequest>';
+    const xmlBody = '<?xml version="1.0"?><TCSRequest>' + '<UserName>{{ username }}</UserName>' + '<TerminalType>API</TerminalType>' + '<Password>{{ password }}</Password>' + '<Function name="SALESREQUESTMERCHANT">' + '<Param1>947</Param1>' + '<Param2>{{orderAmount}}</Param2>' + '<Param4>' + digiPhoneNumber + '</Param4>' + '<Param6>5012235128</Param6>' + '</Function>' + '</TCSRequest>';
 
     // xml response returned here from API call
+    // var xmlResponse = doFetch(xmlBody);
+
     var response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
-    var badResponse = '<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
+    var badResponse = '<?xml version="1.0" ?><TCSReply><Result>100512</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(response, "text/xml");
-
-    // var xmlResponse = doFetch(xmlBody);
 
     var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
 
@@ -237,6 +322,36 @@
       displayTAC();
     } else if (result == 100508) {
       invalidSubscriberNumber();
+    }
+
+  }
+
+  // Get the authorization code from the TAC input field, generates XML content which will be sent to API
+  // We then look at the <result> tag to do the appropriate action
+  function salesRequestExecToSelf() {
+
+    var authoizationCode = document.getElementById('authoizationInputField').value;
+
+    console.log('TAC:' + authoizationCode);
+
+    const xmlBody = '';
+
+    var response = '';
+    var badResponse = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Youve entered an incorrect confirmation number, please check the number and try again.</Message></TCSReply>';
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(badResponse, "text/xml");
+
+    var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+
+    if (result == 0) {
+      displayPaymentSuccess();
+    }
+    else if (result == 100512) {
+      invalidTAC();
+    } else if (result == 100513) {
+      duplicatedTAC();
+    } else if (result == 100702) {
+      limitedFunds();
     }
 
   }
@@ -270,14 +385,46 @@
     y.style.display = "block";
   }
 
+  function displayPaymentSuccess() {
+    var x = document.getElementById("veriContainer");
+    var y = document.getElementById("successContainer");
+    x.style.display = "none";
+    y.style.display = "block";
+  }
+
   // Displays error message
   function invalidSubscriberNumber() {
-    var z = document.getElementById("errorMessageContainer");
+    var z = document.getElementById("errorMessageWrongNumber");
     z.style.display = "block";
 
     // clear telephone form code here
     document.getElementById("digiPhoneNumberField").value = '';
   }
+
+  function invalidTAC() {
+    var z = document.getElementById("errorMessageWrongTAC");
+    z.style.display = "block";
+
+    // clear TAC input field
+    document.getElementById("authoizationInputField").value = '';
+  }
+
+  function duplicatedTAC() {
+    var z = document.getElementById("errorMessageDupTAC");
+    z.style.display = "block";
+
+    // clear TAC input field
+    document.getElementById("authoizationInputField").value = '';
+  }
+
+  function limitedFunds() {
+    var z = document.getElementById("errorMessageFunds");
+    z.style.display = "block";
+
+    // clear TAC input field
+    document.getElementById("authoizationInputField").value = '';
+  }
+
 </script>
 
 {% endif %}
