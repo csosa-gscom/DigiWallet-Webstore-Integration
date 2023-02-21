@@ -1,5 +1,22 @@
 <style>
-  .display-frame {
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+  .custom-font {
+    font-family: "Poppins", sans-serif;
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  *.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  }
+
+  .app-frame {
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -15,11 +32,15 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
-  .center-image {
+  .digiLogo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 35%;
+    width: 40%;
+  }
+
+  .content-container {
+    flex-direction: column;
   }
 
   .center {
@@ -27,21 +48,8 @@
     justify-content: center;
   }
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 5px;
-  }
-
-  .form-input {
-    border: 1px solid #ced4da;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    padding: 10px 1px 10px 12px;
-    width: 100%;
-    min-width: 250px;
-    max-width: 300px;
+  .spacing{
+    margin-top:1rem;
   }
 
   input:focus {
@@ -49,152 +57,464 @@
     background-color: transparent;
   }
 
+  .tel-group {
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    padding: 10px 0px 10px 10px;
+    width: 100%;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
   .divider {
     border-right: 1px solid #ced4da;
-    height: 24px;
+    height: 26px;
     display: inline-block;
     position: absolute;
-    margin-left: 2px;
+    margin-left: 3px;
 
   }
 
   .tel-input {
+    width: 120px;
     display: inline-block;
-    padding-left: 9px;
+    padding-left: 10px;
     border: none !important;
     border-color: transparent !important;
-
-  }
-
-  .font {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-
-  p.font {
-    text-align: center;
-  }
-
-  .errorMessage{
-    display:none;
-    margin-top:6px;
-    color: red;
-    text-align: center;
-
+    outline:none;
   }
 
   .verification-button {
-    color: #ffffff;
-    background-color: #00ace5;
-    padding: 10px 7px;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+    color: #374151;
+    background: #e7e7e7;
+    padding: 10px;
+    border:none;
+    border-radius: 0.5rem;
     width: 100%;
     min-width: 265px;
-    max-width: 315px;
+    max-width: 312px;
+    cursor: pointer;
+    pointer-events: none;
+    transition: all 0.2s ease;
   }
+
+  .verification-button.active {
+      background: #4070f4;
+      color: #fff;
+      pointer-events: auto;
+      }
 
   .verification-button:hover {
-    background-color: #0088b5;
-    transition: 0.4s;
+      background: #0e4bf1;
   }
 
-  .verification-button:active {
-    background-color: #005c7a;
+  .errorMessage {
+    display: none;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: red;
+    text-align: center;
+  }
+ 
+
+  .tac-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  input:valid+span::after {
-    position: absolute;
-    content: "✓";
-    padding-left: 30px;
-    color: #009000;
+  .tac-input-field {
+    flex-direction: row;
+    column-gap: 4px;
   }
+
+  .tac-input-field input {
+    height: 33px;
+    width: 27px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+
+  }
+
+  .tac-input-field input:focus {
+    outline : 2px solid #0089f8;
+  }
+
+  .tac-input-field input::-webkit-inner-spin-button,
+  .tac-input-field input::-webkit-outer-spin-button {
+    display: none;
+  }
+
+  .wrapper {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkmark-payment-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards
+}
+
+.payment-checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both
+}
+
+.payment-checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0
+  }
+}
+
+@keyframes scale {
+
+  0%,
+  100% {
+    transform: none
+  }
+
+  50% {
+    transform: scale3d(1.1, 1.1, 1)
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 50px #7ac142
+  }
+}
 </style>
 
-<div class="display-frame">
+
+<div class="app-frame">
   <div class="card">
-    <img class="center-image" src=https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png alt="DigiWallet Logo">
 
-    <div id="telContainer">
-          <br>
-          <p class="font">Enter your DigiWallet phone number here</p>
 
-          <!-- INPUT TELEPHONE NUMBER SECTION-->
-          <div class="form-container">
+    <img
+      class="digiLogo unselectable"
+      src="https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png"
+      alt="DigiWallet Logo"
+    >
 
-            <div class="center">
-              <div class="form-input">
-                <span class="font">+501</span>
-                <span class="divider"></span>
-                <input class="tel-input font" type="tel" id="digiPhoneNumberField" pattern="[0-9]{3}-[0-9]{4}"
-                  placeholder="xxx-xxxx" maxlength="8" required>
-                <span></span>
-                <!-- Temporary Display to see if phone number is valid -->
-              </div>
-            </div>
 
-            <div class="center">
-              <button onclick="salesRequestMerchant()" class="verification-button" id="getVeriCode" type="submit">Get
-                Verification Code</button>
-            </div>
+    <!-- INPUT TELEPHONE NUMBER SECTION-->
+    <div id="telInputPage">
+      <p class="spacing custom-font center unselectable">Enter your DigiWallet phone number here</p>
 
-            <div class="errorMessage" id="errorMessageContainer">
-              <small >You've entered an invalid DigiWallet subscriber number.
-                Please enter valid mobile number</small>
-            </div>
-
+      <div class="content-container">
+        <div class="center">
+          <div class="spacing tel-group unselectable" id="tel-group">
+            <span class="custom-font unselectable">+501</span>
+            <span class="divider unselectable"></span>
+            <input
+              class="tel-input custom-font"
+              type="tel"
+              id="phoneNumberInput"
+              placeholder="XXX-XXXX"
+              maxlength="8"
+              required
+              onfocus='highlight(this)'
+              onblur='unhighlight(this)'>
           </div>
+        </div>
+        <div class="center">
+          <button
+            onclick="salesRequestMerchant()"
+            class="spacing verification-button custom-font unselectable"
+            id="veri-button"
+            type="button"
+            >
+            Get Verification Code
+          </button>
+        </div>
+        <div class="errorMessage" id="errorMessageWrongNumber">
+          <p>Phone number you entered is not valid. Please check the number and enter a valid DigiWallet  number. Please enter valid mobile number</p>
+        </div>
+      </div>
     </div>
+    <!-- END OF SECTION-->
 
 
-    <div id="veriContainer" style="background-color: blue; display:none">
-      <p>Hello </p>
+    <!-- INPUT TAC SECTION -->
+    <div id="veriContainer" style="display:none">
+      <p class="spacing custom-font center unselectable">Enter 10 digit authorization code sent to your phone</p>
+      <div class="tac-center spacing">
+          <div class="tac-input-field">
+              <input id="tacInput" type="tel" />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+              <input id="tacInput" type="tel" disabled />
+          </div>
+          <button onclick="salesRequestExecToSelf()" class="spacing verification-button custom-font unselectable" id="veriTAC" >Pay ${{orderAmount}}</button>
+      </div>
     </div>
+    <div class="errorMessage custom-font" id="errorMessageWrongTAC">
+      <p>You've entered an incorrect confirmation number. Please check the number and try again.</p>
+    </div>
+    <div class="errorMessage custom-font" id="errorMessageDupTAC">
+      <p>The confirmation number has already been used. Please check the number and try again.</p>
+    </div>
+    <div class="errorMessage custom-font" id="errorMessageFunds">
+      <p>Transaction Declined. Please check that you have sufficient funds and try again.</p>
+    </div>
+    <!-- END OF SECTION-->
+
+
+    <!-- PAYMENT CONFIRMED SECTION-->
+      <div id="successContainer" style="display:none">
+          <div class="wrapper spacing"> 
+              <svg class="payment-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                  <circle class="checkmark-payment-circle" cx="26" cy="26" r="25" fill="none" />
+                  <path class="payment-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+              </svg>
+          </div>
+          <p class="spacing custom-font tac-center">Payment Successfully Processed</p>
+      </div>
+      <!-- END OF SECTION-->
 
   </div>
 </div>
 
-<script>
-  var tele = document.getElementById('digiPhoneNumberField');
 
-  tele.addEventListener('keyup', function (e) {
+
+
+<script>
+  var tele = document.getElementById('phoneNumberInput');
+  var veriButton = document.getElementById("veri-button");
+  var telGroup = document.getElementById('tel-group');
+  var errorMsg = document.getElementById("errorMessageWrongNumber");
+  const tacInputs = document.querySelectorAll("#tacInput"); //returns list of all elements with id="tacInput"
+  const tacButton = document.querySelector("#veriTAC");
+
+  // Auto selects telephone input field when page loads
+  // tele.focus();
+  // tele.select();
+
+  // Highlight and unhighlight the telephone group for user accessibility
+  function highlight(){
+    telGroup .style.border = "2px solid #0089f8";
+    errorMsg.style.display = "none";
+  }
+
+  function unhighlight(){
+    telGroup .style.border = "1px solid #ced4da";
+  }
+
+  // Event listener to add a dash to fourth character in the input field, when input field is filled and 
+  // meets the condition then the button is enabled
+  tele.addEventListener('keyup', ()=> {
+
     if (event.key != 'Backspace' && (tele.value.length === 3)) {
       tele.value += '-';
     }
+
+    // Checks input length equals to 8, doesnt have alphabets, and it has a dash in its fourth place to procceed
+    if(tele.value.length === 8 && !tele.value.match(/[a-zA-Z]/) && tele.value.charAt(3) === "-"){
+      veriButton.classList.add("active");
+      return;
+    } else {
+      veriButton.classList.remove("active");
+    }
   });
 
+
+  // gets the user inputed telephone number, formats it and generates XML content to be
+  // sent to an API call. We then look at the <result> tag to do the appropiate action
   function salesRequestMerchant() {
-    response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
-    badResponse='<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
-    
+    var digiPhoneNumber = document.getElementById('phoneNumberInput').value;
+    var digiPhoneNumber = digiPhoneNumber.replace('-', '');
+    var digiPhoneNumber = '501' + digiPhoneNumber;
+
+    //const xmlBody = '<?xml version="1.0"?><TCSRequest>' + '<UserName> {{ username }} </UserName>' + '<TerminalType>API</TerminalType>' + '<Password> {{ password }} </Password>' + '<Function name="SALESREQUESTMERCHANT">' + '<Param1>947</Param1>' + '<Param2> {{ orderAmount }} </Param2>' + '<Param4>' + digiPhoneNumber + '</Param4>' + '<Param6>5012235128</Param6>' + '</Function>' + '</TCSRequest>';
+
+    // xml response returned here from API call
+    var response = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
+    var badresponse = '<?xml version="1.0" ?><TCSReply><Result>100508</Result><Message>Transaction declined. You\'ve entered an invalid DigiWallet subscriber number. Please enter valid mobile number.</Message></TCSReply>';
     parser = new DOMParser();
-    xmlDoc = parser.parseFromString(badResponse,"text/xml");
+    xmlDoc = parser.parseFromString(response, "text/xml")
+
+    // var xmlResponse = doFetch(xmlBody);
 
     var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
 
-    if(result == 0){
+    // Result code ditcates error or continue to next step
+    if (result == 0) {
       displayTAC();
-    } else if(result == 100508){
+    } else if (result == 100508) {
       invalidSubscriberNumber();
     }
+
+  }
+
+  // POST API Request, the response is parsed into an XML object and returned
+  // @Param content - XML content to be sent
+  function doFetch(content) {
+    fetch('http://190.197.36.93:6060/Telepin', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Content-Type': 'text/xml'
+      },
+      body: content
+    }).then(response => {
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(response, "text/xml");
+      return xmlDoc;
+    }).catch(error => console.log('POST REQUEST FAILED:', error));
   }
 
 
+  // Hides Telephone Input Page and displays Code Verification Page where user 
+  // will be prompted to enter TAC and complete payment process
   function displayTAC() {
-    var x = document.getElementById("telContainer");
+    var x = document.getElementById("telInputPage");
     var y = document.getElementById("veriContainer");
     x.style.display = "none";
     y.style.display = "block";
-
   }
 
-  function invalidSubscriberNumber(){
-    var z = document.getElementById("errorMessageContainer");
+  //Display Payment Success Page
+  function displayPaymentSuccess() {
+    var f = document.getElementById("veriContainer");
+    var g = document.getElementById("successContainer");
+    f.style.display = "none";
+    g.style.display = "block";
+  }
+
+
+  // ERROR MESSAGES
+  function invalidSubscriberNumber() {
+    errorMsg.style.display = "block";
+    telGroup .style.border = "1px solid red";
+    veriButton.classList.remove("active");
+  }
+  function invalidTAC() {
+    var z = document.getElementById("errorMessageWrongTAC");
     z.style.display = "block";
-    //clear telephone form
   }
+  function duplicatedTAC() {
+    var z = document.getElementById("errorMessageDupTAC");
+    z.style.display = "block";
+  }
+  function limitedFunds() {
+    var z = document.getElementById("errorMessageFunds");
+    z.style.display = "block";
+  }
+
+
+  //------------------------------ TAC FORM INPUT SCRIPT ------------------------------
+  // iterate over all inputs
+  tacInputs.forEach((input, index1) => {
+    input.addEventListener("keyup", (e) => {
+      const currentInput = input,               // This code gets the current input element and stores it in the currentInput variable
+      nextInput = input.nextElementSibling,     // This code gets the next sibling element of the current input element and stores it in the nextInput variable
+      prevInput = input.previousElementSibling; // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+
+      // if the value has more than one character then clear it
+      if (currentInput.value.length > 1) {
+          currentInput.value = "";
+          return;
+      }
+
+      // if the next input is disabled and the current value is not empty
+      // enable the next input and focus on it
+      if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+          nextInput.removeAttribute("disabled");
+          nextInput.focus();
+      }
+
+      // if the backspace key is pressed
+      if (e.key === "Backspace") {
+              // iterate over all inputs again
+              tacInputs.forEach((input, index2) => {
+              // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+              // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+              if (index1 <= index2 && prevInput) {
+                  input.setAttribute("disabled", true);
+                  input.value = "";
+                  prevInput.focus();
+              }});
+      }
+
+              //if the tenth input( which index number is 9) is not empty and has not disable attribute then
+              //add active class if not then remove the active class.
+      if (!tacInputs[9].disabled && tacInputs[9].value !== "") {
+          tacButton.classList.add("active");
+          return;
+      }
+          
+      tacButton.classList.remove("active");
+    });
+  });
+
+
+
+  // Get the authorization code from the TAC input field, generates XML content which will be sent to API
+  // We then look at the <result> tag to do the appropriate action
+  function salesRequestExecToSelf() {
+
+      //Get the TAC by iterating node list and getting its value
+      var tacCode;
+      tacInputs.forEach((input, index1) => {
+          tacCode += input.value; 
+          console.log(input);
+          
+      });
+      console.log(tacCode);
+
+      var response1 = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Youve entered an incorrect confirmation number, please check the number and try again.</Message></TCSReply>';
+      parser = new DOMParser();
+      xmlDoc = parser.parseFromString(response1, "text/xml");
+
+      var result = xmlDoc.getElementsByTagName("Result")[0].childNodes[0].nodeValue;
+
+      if (result == 0) {
+          displayPaymentSuccess();
+      } else if (result == 100512) {
+          invalidTAC();
+      } else if (result == 100513) {
+          duplicatedTAC();
+      } else if (result == 100702) {
+          limitedFunds();
+      }
+  }
+
+
+
 
 </script>
 
-<h1>testing</h1>
