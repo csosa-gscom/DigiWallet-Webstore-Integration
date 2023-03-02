@@ -1,18 +1,10 @@
 <script>
   (() => {
-    if (window.localStorage) {
-
-// If there is no item as 'reload'
-// in localstorage then create one &
-// reload the page
+    if (window.localStorage) { // If there is no item as 'reload' in localstorage then create one & reload the page
       if (!localStorage.getItem('reload')) {
         localStorage['reload'] = true;
         window.location.reload();
-      } else {
-
-// If there exists a 'reload' item
-// then clear the 'reload' item in
-// local storage
+      } else { // If there exists a 'reload' item then clear the 'reload' item in local storage
         localStorage.removeItem('reload');
       }
     }
@@ -24,9 +16,9 @@
 {% assign status = order.financial_status %}
 
 {% comment %} DIGIWALLET PAYMENT METHOD {% endcomment %}
-{% if fulfillment == "unfulfilled" and status == "pending" %}
-  {% if order.transactions[0].gateway == "DigiWallet" %}
 
+{% if order.transactions[0].gateway == "DigiWallet" %}
+  {% if fulfillment == "unfulfilled" and status == "pending" %}
     {% assign digiWalletLogo = "https://www.digiwallet.bz/wp-content/uploads/2021/11/DigiWallet-Website_Logo.png" %}
     {% assign username = "5012235128" %}
     {% assign password = "000000" %}
@@ -416,8 +408,6 @@
       </div>
     </div>
 
-
-
     <script>
       var tele = document.getElementById('phoneNumberInput');
       var veriButton = document.getElementById("veri-button");
@@ -466,14 +456,13 @@
         var digiPhoneNumber = digiPhoneNumber.replace('-', '');
         var digiPhoneNumber = '501' + digiPhoneNumber;
 
-        var xmlBody = "<?xml version=\"1.0\"?><TCSRequest><UserName>  {{username}} </UserName><TerminalType>API</TerminalType><Password>  {{password}} </Password><Function name=\"SALESREQUESTMERCHANT\"><Param1>947</Param1><Param2>{{orderAmount}}</Param2><Param4>" + digiPhoneNumber + "</Param4><Param6>  {{username}} </Param6></Function></TCSRequest>";
+        var xmlBody = "<?xml version=\"1.0\"?><TCSRequest><UserName> {{username}} </UserName><TerminalType>API</TerminalType><Password> {{password}} </Password><Function name=\"SALESREQUESTMERCHANT\"><Param1>947</Param1><Param2>{{orderAmount}}</Param2><Param4>" + digiPhoneNumber + "</Param4><Param6> {{username}} </Param6></Function></TCSRequest>";
 
 // console.log(xmlBody);
 // var fakeresponse = '<?xml version="1.0" ?><TCSReply><Result>0</Result><Message>Target account found, id = 6861 group = 11 balance = 0.0</Message><param1>1174</param1><param2>2.21000</param2><param3>2.21000</param3><param4>0.00000</param4><param5>0.00000</param5><param6>0.00000</param6><param7>0.00000</param7><param8>-0.02000</param8><param9>0.00000</param9><param10>0.00000</param10><param11>0.00000</param11><param15>2.21000</param15></TCSReply>';
 
 // xml response returned here from API call
         var xmlResponse = doFetch(xmlBody);
-
 
 // Result code ditcates error or continue to next step
         parser = new DOMParser();
